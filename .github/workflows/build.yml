@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 env:
-  LOGO_URL: https://i.ibb.co.com/4n0LPmHB/New-Project-DF44-C5-B.png
+  LOGO_URL: https://i.ibb.co.com/Psbmh1M0/file-00000000c1ac82119c142444655f4aca.png
   ICON_BG: "#ffffff"
 
 jobs:
@@ -55,7 +55,7 @@ jobs:
         run: |
           mkdir -p assets
           if [ ! -f assets/icon.png ]; then
-            curl -fL "https://i.ibb.co.com/4n0LPmHB/New-Project-DF44-C5-B.png" -o logo.png
+            curl -fL "https://i.ibb.co.com/Psbmh1M0/file-00000000c1ac82119c142444655f4aca.png" -o logo.png
             convert logo.png -background none -gravity center -resize 760x760 -extent 1024x1024 assets/icon.png
           fi
           npx @capacitor/assets generate --android --iconBackgroundColor "#0d0f13" --iconBackgroundColorDark "#0d0f13"
