@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 env:
-  LOGO_URL: https://i.ibb.co.com/Psbmh1M0/file-00000000c1ac82119c142444655f4aca.png
+  LOGO_URL: https://i.ibb.co.com/4n0LPmHB/New-Project-DF44-C5-B.png
   ICON_BG: "#ffffff"
 
 jobs:
@@ -55,10 +55,26 @@ jobs:
         run: |
           mkdir -p assets
           if [ ! -f assets/icon.png ]; then
-            curl -fL "https://i.ibb.co.com/Psbmh1M0/file-00000000c1ac82119c142444655f4aca.png" -o logo.png
+            curl -fL "https://i.ibb.co.com/4n0LPmHB/New-Project-DF44-C5-B.png" -o logo.png
             convert logo.png -background none -gravity center -resize 760x760 -extent 1024x1024 assets/icon.png
           fi
           npx @capacitor/assets generate --android --iconBackgroundColor "#0d0f13" --iconBackgroundColorDark "#0d0f13"
+
+      - name: Generate app icons
+        env:
+          LOGO_URL: https://i.ibb.co.com/Psbmh1M0/file-00000000c1ac82119c142444655f4aca.png
+          ICON_BG: "#FFFFFF"
+        run: |
+          mkdir -p assets
+          if [ ! -f assets/logo.png ]; then
+            curl -fL --retry 3 -A "Mozilla/5.0" "$LOGO_URL" -o assets/logo.png
+          fi
+          file assets/logo.png
+          # full icon (legacy/round icons)
+          convert assets/logo.png -background none -gravity center -resize 1024x1024 -extent 1024x1024 assets/icon-only.png
+          # adaptive foreground with safe-zone padding
+          convert assets/logo.png -background none -gravity center -resize 640x640 -extent 1024x1024 assets/icon-foreground.png
+          npx @capacitor/assets generate --android --iconBackgroundColor "$ICON_BG" --iconBackgroundColorDark "$ICON_BG"
 
       - name: Add camera permission
         run: |
