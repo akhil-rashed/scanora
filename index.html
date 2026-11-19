@@ -208,7 +208,7 @@ input:focus-visible {
 .brand-mark {
   width: 24px;
   height: 24px;
-  flex-shrink: 0;
+  object-fit: contain;
 }
 
 .brand-title {
@@ -1192,10 +1192,9 @@ input:focus-visible {
 }
 
 .empty-illustration {
-  width: 88px;
-  height: 88px;
-  margin-bottom: 14px;
-  color: var(--text-secondary);
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
 }
 
 .empty-title {
@@ -1387,15 +1386,13 @@ input:focus-visible {
 
     <header class="top-bar">
       <div class="brand-pill liquid-glass">
-        <svg class="brand-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <rect x="2" y="2" width="20" height="20" rx="6" fill="rgba(255,255,255,0.16)"/>
-          <rect x="5.5" y="5.5" width="5" height="5" rx="1.4" stroke="#ffffff" stroke-width="1.8"/>
-          <rect x="13.5" y="5.5" width="5" height="5" rx="1.4" stroke="#ffffff" stroke-width="1.8"/>
-          <rect x="5.5" y="13.5" width="5" height="5" rx="1.4" stroke="#ffffff" stroke-width="1.8"/>
-          <rect x="13.5" y="13.5" width="5" height="5" rx="1.5" fill="#60A5FA"/>
-        </svg>
-        <h1 class="brand-title" data-app-name>Scanora</h1>
-      </div>
+  <img
+    class="brand-mark"
+    src="https://i.ibb.co.com/zh9zp3fq/file-00000000bfcc8211aa51fb9341c6096d.png"
+    alt="Scanora logo"
+  >
+  <h1 class="brand-title" data-app-name>Scanora</h1>
+</div>
 
       <button type="button" id="open-history-btn" class="cam-icon-btn liquid-glass" aria-label="Open scan history">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -1544,17 +1541,18 @@ input:focus-visible {
 
       <div class="empty-state" id="history-empty" hidden>
         <div class="empty-glass-card">
-          <svg class="empty-illustration" viewBox="0 0 96 96" fill="none" aria-hidden="true">
-            <rect x="14" y="18" width="68" height="60" rx="16" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-opacity="0.22" stroke-width="2"/>
-            <rect x="26" y="30" width="16" height="16" rx="4" stroke="currentColor" stroke-width="2.2"/>
-            <rect x="54" y="30" width="16" height="16" rx="4" stroke="currentColor" stroke-width="2.2"/>
-            <rect x="26" y="54" width="16" height="16" rx="4" stroke="currentColor" stroke-width="2.2"/>
-            <rect x="54" y="54" width="7" height="7" rx="2" fill="currentColor" fill-opacity="0.45"/>
-            <rect x="63" y="63" width="7" height="7" rx="2" fill="currentColor" fill-opacity="0.45"/>
-          </svg>
-          <h3 class="empty-title">No scans yet</h3>
-          <p class="empty-desc">Point your camera at any QR code or barcode and it will appear here.</p>
-        </div>
+  <img
+    class="empty-illustration"
+    src="https://i.ibb.co.com/Psbmh1M0/file-00000000c1ac82119c142444655f4aca.png"
+    alt=""
+    aria-hidden="true"
+  />
+
+  <h3 class="empty-title">No scans yet</h3>
+  <p class="empty-desc">
+    Point your camera at any QR code or barcode and it will appear here.
+  </p>
+</div>
       </div>
 
       <p class="history-footer-note" data-privacy-text>Your scans stay on your device.</p>
