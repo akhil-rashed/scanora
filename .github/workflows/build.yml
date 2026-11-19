@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+env:
+  LOGO_URL: https://i.ibb.co.com/4n0LPmHB/New-Project-DF44-C5-B.png
+  ICON_BG: "#ffffff"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,6 +32,30 @@ jobs:
 
       - name: Add Android platform
         run: npx cap add android
+
+      - name: Prepare app icon
+        run: |
+          mkdir -p assets
+          if [ -f assets/logo.png ]; then
+            cp assets/logo.png logo-src.png
+          else
+            curl -fL -A "Mozilla/5.0" -o logo-src.png "$LOGO_URL"
+          fi
+          identify logo-src.png
+          convert logo-src.png -resize 900x900 -background "$ICON_BG" -gravity center -extent 1024x1024 -alpha remove -alpha off assets/icon-only.png
+          convert logo-src.png -resize 660x660 -background none -gravity center -extent 1024x1024 assets/icon-foreground.png
+          convert -size 1024x1024 xc:"$ICON_BG" assets/icon-background.png
+          npm install --no-save @capacitor/assets@3
+          npx capacitor-assets generate --android
+
+      - name: Generate app icon from logo
+        run: |
+          mkdir -p assets
+          if [ ! -f assets/icon.png ]; then
+            curl -fL "https://i.ibb.co.com/4n0LPmHB/New-Project-DF44-C5-B.png" -o logo.png
+            convert logo.png -background none -gravity center -resize 760x760 -extent 1024x1024 assets/icon.png
+          fi
+          npx @capacitor/assets generate --android --iconBackgroundColor "#0d0f13" --iconBackgroundColorDark "#0d0f13"
 
       - name: Add camera permission
         run: |
