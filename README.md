@@ -1,216 +1,491 @@
-<div align="center">
-
-<img src="[https://i.ibb.co.com/zh9zp3fq/file-00000000bfcc8211aa51fb9341c6096d.png](https://i.ibb.co.com/Psbmh1M0/file-00000000c1ac82119c142444655f4aca.png)" alt="Scanora logo" width="96" height="96" />
-
 # Scanora
 
-**Scan any QR code or barcode. Instantly. Privately.**
+<p align="center">
+  <img src="https://i.ibb.co.com/4n0LPmHB/New-Project-DF44-C5-B.png" alt="Scanora" width="96">
+</p>
 
-A fast, friendly scanner that lives on your phone, works offline, and keeps every scan on your device.
+<h3 align="center">A clean, private QR & barcode scanner built to stay out of the way.</h3>
 
-<br />
+<p align="center">
+  Fast scanning · Local history · Gallery scanning · Smart results · No backend
+</p>
 
-[![Download APK](https://img.shields.io/badge/Download-Latest_APK-2563eb?style=for-the-badge&logo=android&logoColor=white)](../../releases/latest)
+<p align="center">
+  <img src="https://img.shields.io/badge/platform-Android-111827?style=flat-square" alt="Android">
+  <img src="https://img.shields.io/badge/version-1.0.0-2563EB?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/Capacitor-7-111827?style=flat-square" alt="Capacitor 7">
+  <img src="https://img.shields.io/badge/license-not%20specified-64748B?style=flat-square" alt="License">
+</p>
 
-<br />
+---
 
-![Android](https://img.shields.io/badge/Android-Capacitor_7-3ddc84?style=flat-square&logo=android&logoColor=white)
-![JavaScript](https://img.shields.io/badge/Vanilla-JavaScript-f7df1e?style=flat-square&logo=javascript&logoColor=black)
-![Offline](https://img.shields.io/badge/Works-Offline-2563eb?style=flat-square)
-![No tracking](https://img.shields.io/badge/Tracking-None-16a34a?style=flat-square)
-![Build](https://img.shields.io/github/actions/workflow/status/akhil-rashed/scanora/build.yml?style=flat-square&label=build)
+## What is Scanora?
 
-</div>
+**Scanora** is a lightweight QR and barcode scanner designed around one simple idea:
 
-<br />
+> **Point. Scan. Done.**
 
-## Why Scanora?
+It opens directly into the scanner instead of making the user walk through an intro or dashboard. The camera continuously looks for codes, while the interface keeps controls close, readable, and intentionally quiet.
 
-Most scanner apps are packed with ads, pop-ups and permissions they have no business asking for. Scanora does one thing and does it well: point your camera, get the result, act on it.
+The app also includes a local scan history, gallery-based scanning, smart result actions, filtering, sorting, search, TXT export, torch control, zoom, and multi-code detection.
 
-There is no account, no cloud and no analytics. Your scan history stays on your phone, and nowhere else.
+There is no server, account system, or remote database in the project. Scan history is persisted locally on the device.
 
-<br />
+---
 
-## Highlights
+## ✦ Highlights
 
-**Scanning**
-- Live camera scanning with a clean, distraction-free viewfinder
-- Pinch to zoom, tap to focus and a one-tap flashlight
-- Scan from a photo in your gallery
-- Pick the right code when several appear in the same frame
-- Smart duplicate protection, so one code never fires twice in a row
+- **Live camera scanning** with automatic QR/barcode detection
+- **Gallery scanning** for codes already saved as images
+- **Automatic format recognition** — no manual QR/barcode mode switch
+- **Multi-code detection** when multiple codes are visible
+- **Local scan history** stored on-device
+- **Search, filter & sort** scan history
+- **Swipe-to-delete** history entries
+- **TXT history export**
+- **Copy & share** scan results
+- **Smart actions** for recognized content
+- **Torch control** when the device supports it
+- **Camera zoom** when supported
+- **Tap-to-focus** interaction
+- **Duplicate-scan cooldown** to prevent noisy repeated entries
+- **Native Android bridge support**
+- **Capacitor Android support**
+- **Offline 1D barcode fallback decoder**
+- **Light/dark appearance** based on the device color scheme
+- **Responsive, touch-first UI**
+- **No images stored for scan history**
 
-**Understands what it scans**
+---
 
-| You scan | Scanora offers |
-| --- | --- |
-| Website link | Open link, Copy |
-| Wi-Fi network | Copy password, Copy network name |
-| Contact card (vCard) | Save contact, Copy phone |
-| SMS | Send message, Copy |
-| Location | Open in Maps, Copy coordinates |
-| Email | Send email, Copy |
-| Phone number | Call, Copy |
-| Plain text | Copy, Share |
+## Scanning
 
-**History that stays out of your way**
-- Every scan is saved automatically on your device
-- Search by content, format or date
-- Filter by QR or Barcode, and sort by newest, oldest or type
-- Swipe a card to delete it
-- Export your history as a `.txt` file
-- Clear everything in one tap
+Scanora uses the browser/WebView `BarcodeDetector` API when it is available.
 
-**Little touches**
-- Soft scan chime, easy to mute
-- Light and dark theme that follows your phone
-- Frosted-glass interface with smooth, springy motion
-- Friendly, clear messages when camera access is denied or unavailable
+The application is configured to recognize:
 
-<br />
+| Format | Support |
+|---|---|
+| QR Code | ✓ |
+| EAN-13 | ✓ |
+| EAN-8 | ✓ |
+| UPC-A | ✓ |
+| UPC-E | ✓ |
+| Code 128 | ✓ |
+| Code 39 | ✓ |
+| Code 93 | ✓ |
+| ITF | ✓ |
+| Codabar | ✓ |
+| Data Matrix | ✓ |
+| PDF417 | ✓ |
+| Aztec | ✓ |
 
-## Supported formats
+### Fallback decoding
 
-| 2D codes | 1D barcodes |
-| --- | --- |
-| QR Code | EAN-13, EAN-8 |
-| Data Matrix | UPC-A, UPC-E |
-| PDF417 | Code 128, Code 39, Code 93 |
-| Aztec | ITF, Codabar |
+When the native `BarcodeDetector` API is unavailable, Scanora includes a local JavaScript fallback decoder for common 1D formats.
 
-Detection uses the native `BarcodeDetector` API where the device supports it. A lightweight built-in decoder takes over for common retail barcodes when it doesn't, with no network involved.
+The bundled fallback specifically implements:
 
-<br />
+- EAN-13
+- UPC-A
+- EAN-8 / other configured formats through the native detector when available
+- Code 128 / Code 39 through the native detector when available
 
-## Privacy first
+The fallback does **not** provide feature-parity with the native detector, so supported formats can vary by browser/WebView/device.
 
-- Scans are stored in on-device IndexedDB, with a localStorage fallback
-- Nothing is uploaded, synced or shared unless you press Share yourself
-- Camera access is requested only to scan, and the app explains why before asking
-- Links are validated before they are opened
+---
 
-<br />
+## Smart results
 
-## Get the app
+Scanora doesn't just dump the raw scanned string onto the screen.
 
-### Install on Android
+It attempts to understand what the code contains and presents useful actions when possible.
 
-1. Open the [**Releases**](../../releases) page
-2. Download the latest `release.apk`
-3. Open it on your phone and allow installation from your browser if prompted
+### Recognized content types
 
-Every push to `main` builds and publishes a fresh release automatically.
+- **URLs** — open the detected web address
+- **Phone numbers** — call
+- **Email addresses** — compose an email
+- **SMS payloads** — open the messaging action
+- **Wi-Fi payloads** — display network information
+- **vCards** — display contact information
+- **Geo coordinates** — open map/location actions
+- **Plain text** — copy/share as text
 
-### Try it in a browser
+The result screen also keeps the original scanned value available, so the app remains useful even when the payload is not one of the recognized structured types.
 
-Scanora is a single static page, so any local server will do. The camera works on `localhost`.
+---
 
-```bash
-git clone https://github.com/akhil-rashed/scanora.git
-cd scanora
-npx serve www
+## History, without the cloud
+
+Scanora keeps scan history locally.
+
+The storage layer uses:
+
+1. **IndexedDB** as the primary local database
+2. **localStorage** as a fallback for restricted WebView environments
+
+Stored scan records contain the scanned content, format, source, timestamp, and a generated local ID.
+
+**Images are not stored as part of scan history.**
+
+History can be:
+
+- searched
+- filtered by All / QR / Barcode
+- sorted by newest or oldest
+- grouped by QR or barcode
+- opened for detailed results
+- individually deleted
+- cleared completely
+- exported as a readable `.txt` file
+
+---
+
+## Privacy
+
+Scanora is designed around local-first use.
+
+There is no backend or account system in this repository, and the history database is local to the device.
+
+> **Your scans stay on your device.**
+
+Some result actions naturally leave the app — for example, opening a web URL, starting a phone call, composing an email, or opening a map. Those actions are handled by the operating system or the relevant external application.
+
+---
+
+## Gallery scanning
+
+Don't have the physical code in front of you?
+
+Scanora can scan a code from an image selected from the gallery.
+
+The same detection pipeline is used to inspect the image, and the resulting scan can be saved to local history just like a camera scan.
+
+---
+
+## Android architecture
+
+Scanora is built as a web-first application and packaged for Android with **Capacitor**.
+
+```text
+┌─────────────────────────────┐
+│        Scanora UI           │
+│       HTML / CSS / JS       │
+└──────────────┬──────────────┘
+               │
+        NativeBridge
+               │
+      ┌────────┼─────────┐
+      │        │         │
+    Camera   Torch     Gallery
+      │        │         │
+      └────────┼─────────┘
+               │
+        Android / WebView
 ```
 
-<br />
+The `NativeBridge` abstraction keeps hardware-specific functionality separated from the main scanner logic.
 
-## Build it yourself
+It can work with:
 
-**Requirements:** Node.js 20+, JDK 21, Android Studio (or the Android SDK)
+- standard browser camera APIs
+- Android bridge methods when available
+- Capacitor / Android WebView environments
 
-```bash
-# 1. Install dependencies
-npm install
+The same web code can therefore be reused across different deployment targets.
 
-# 2. Add the Android platform
-npx cap add android
-
-# 3. Copy the web app into the native project
-npx cap sync android
-
-# 4. Open in Android Studio and run
-npx cap open android
-```
-
-Add the camera permission to `android/app/src/main/AndroidManifest.xml` if it isn't there already:
-
-```xml
-<uses-permission android:name="android.permission.CAMERA" />
-<uses-feature android:name="android.hardware.camera" android:required="false" />
-```
-
-<br />
-
-## Project structure
-
-```
-scanora/
-├── www/                      Web app that Capacitor ships
-│   └── index.html            UI, styles and all app logic in one file
-├── index.html                Source copy of the app
-├── capacitor.config.json     App id, name and web directory
-├── package.json              Capacitor dependencies
-└── .github/workflows/
-    └── build.yml             CI that builds, signs and releases the APK
-```
-
-<br />
-
-## How it works
-
-```
-Camera / Gallery
-      │
-      ▼
- ScannerEngine ──► BarcodeDetector (native)
-      │                  │ not available?
-      │                  ▼
-      │            OfflineDecoder (pure JS)
-      ▼
- Classifier ──► URL · Wi-Fi · vCard · SMS · Geo · Email · Phone · Text
-      │
-      ▼
- Result sheet ──► Actions ──► History (IndexedDB)
-```
-
-A small `NativeBridge` layer keeps camera, torch, gallery and file export separate from the UI, so the same code runs as a web page, a Capacitor app, or inside an Android WebView.
-
-<br />
+---
 
 ## Tech stack
 
-- **App:** HTML, CSS and vanilla JavaScript, with no framework and no runtime dependencies
-- **Native shell:** [Capacitor](https://capacitorjs.com) 7
-- **Storage:** IndexedDB
-- **CI/CD:** GitHub Actions, with automatic APK signing and GitHub Releases
+Scanora intentionally keeps the stack small.
 
-<br />
+### Frontend
+
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- SVG icons
+- Web APIs
+
+### Android
+
+- Capacitor 7
+- Android WebView
+- Java/Kotlin-generated Android project through Capacitor
+
+### Local storage
+
+- IndexedDB
+- localStorage fallback
+
+### Automation
+
+- GitHub Actions
+- Node.js 20
+- Java 21
+- Capacitor Android build pipeline
+
+No React.  
+No Vue.  
+No Tailwind.  
+No Bootstrap.  
+No backend.
+
+Just a focused client-side application.
+
+---
+
+## Project structure
+
+```text
+scanora/
+├── .github/
+│   └── workflows/
+│       └── build.yml
+│
+├── www/
+│   ├── index.html
+│   └── Ash.txt
+│
+├── index.html
+├── package.json
+├── capacitor.config.json
+└── README.md
+```
+
+### `www/index.html`
+
+The main application.
+
+It contains the scanner UI, styles, detection logic, local history layer, result parsing, native bridge abstraction, gallery handling, export logic, and interaction controllers.
+
+### `capacitor.config.json`
+
+Defines the Android application identity and tells Capacitor that `www/` is the web application directory.
+
+Current app identity:
+
+```text
+App name: Scanora
+Package ID: com.scanora.app
+Web directory: www
+```
+
+### `.github/workflows/build.yml`
+
+Automates the Android build whenever changes are pushed to `main`, while also supporting manual workflow dispatch.
+
+The workflow:
+
+1. checks out the repository
+2. installs Node.js
+3. installs Java
+4. installs npm dependencies
+5. adds the Android platform
+6. prepares/generates Android icons
+7. adds camera permission
+8. syncs the web application into Android
+9. builds a release APK
+10. signs the APK
+11. uploads the APK as a workflow artifact
+12. publishes a GitHub Release
+
+---
+
+## Run locally
+
+### Requirements
+
+- Node.js 20+
+- npm
+- Android Studio / Android SDK if building Android locally
+- Capacitor CLI dependencies from `package.json`
+
+### Install
+
+```bash
+npm install
+```
+
+### Add Android
+
+```bash
+npx cap add android
+```
+
+### Sync the web app
+
+```bash
+npx cap sync android
+```
+
+### Open Android Studio
+
+```bash
+npx cap open android
+```
+
+### Build from Android Studio
+
+Use Android Studio's normal build/run tools after syncing the project.
+
+---
+
+## Build an APK with GitHub Actions
+
+The repository already includes:
+
+```text
+.github/workflows/build.yml
+```
+
+Push the project to the `main` branch or manually run the workflow from the **Actions** tab.
+
+The workflow produces:
+
+- a `release.apk` artifact
+- a GitHub Release containing the APK
+
+### Production signing note
+
+The current workflow creates its signing keystore inside CI. That is convenient for development/testing, but it is **not a good long-term production signing strategy** because Android app updates should use a persistent signing key.
+
+For a production release, store the keystore and signing credentials securely in GitHub Secrets and reuse the same signing identity for future versions.
+
+---
+
+## Design philosophy
+
+Scanora's interface is intentionally **modern without trying to look futuristic**.
+
+The visual language focuses on:
+
+- soft glass surfaces
+- restrained blur
+- clean typography
+- subtle depth
+- rounded controls
+- calm blue accents
+- responsive micro-interactions
+- camera-first composition
+- generous spacing
+- clear hierarchy
+
+The scanner screen uses a dark camera stage with a sculpted viewfinder, a subtle scanning sweep, compact status controls, and a floating bottom dock.
+
+Secondary screens use a lighter ambient surface with soft blurred orbs and translucent cards.
+
+The goal is not to make the app look like a spaceship.
+
+It should simply feel **finished**.
+
+---
+
+## Interaction details
+
+Small interactions are part of the experience rather than decoration.
+
+Examples include:
+
+- viewfinder compression when a code is detected
+- detection color transition
+- scanning sweep animation
+- tap focus pulse
+- spring-based button feedback
+- torch state feedback
+- zoom state updates
+- swipe-to-delete history cards
+- result sheets and confirmation modals
+- toast feedback
+- responsive bottom dock controls
+
+The UI is designed around touch input first, with safe-area support for modern mobile devices.
+
+---
+
+## Configuration
+
+Application-wide values are centralized in `APP_CONFIG` inside `www/index.html`.
+
+```js
+const APP_CONFIG = Object.freeze({
+  APP_NAME: 'Scanora',
+  APP_VERSION: '1.0.0',
+  PRIVACY_STATEMENT: 'Your scans stay on your device.',
+  DUPLICATE_COOLDOWN_MS: 2500,
+  SCAN_INTERVAL_MS: 140,
+  SUPPORTED_FORMATS: [...]
+});
+```
+
+This makes common application settings easier to change without hunting through the entire codebase.
+
+---
+
+## Why Scanora?
+
+A scanner doesn't need a complicated product tour, a giant dashboard, or an account before it lets you scan something.
+
+Scanora keeps the flow simple:
+
+```text
+Open
+  ↓
+Point
+  ↓
+Detect
+  ↓
+Understand
+  ↓
+Act / Save
+```
+
+Everything else stays secondary.
+
+---
 
 ## Roadmap
 
-- [ ] QR code generator
-- [ ] Batch scanning mode
-- [ ] Export history as CSV
-- [ ] Installable web version (PWA)
-- [ ] More languages
+Possible future improvements include:
 
-<br />
+- richer barcode fallback coverage
+- more structured payload types
+- better accessibility controls
+- customizable scan behavior
+- configurable history retention
+- persistent production signing
+- broader platform packaging
+- automated tests for decoding and payload parsing
+
+---
 
 ## Contributing
 
-Ideas, bug reports and pull requests are all welcome.
+Contributions, bug reports, and improvements are welcome.
 
-1. Fork the repository
-2. Create a branch: `git checkout -b feature/your-idea`
-3. Commit your changes and push the branch
-4. Open a pull request
+If you're changing scanner behavior, please keep the following principles in mind:
 
-<br />
+- preserve the camera-first flow
+- avoid unnecessary dependencies
+- keep scan history local by default
+- avoid storing camera frames
+- keep interactions fast on mobile hardware
+- maintain accessibility and touch-friendly targets
+- prefer small, understandable changes over unnecessary abstraction
 
-<div align="center">
+---
 
-Made by [Akhil Rashed](https://github.com/akhil-rashed)
+## License
 
-If Scanora is useful to you, a star on the repo means a lot.
+No license is currently specified in the repository.
 
-</div>
+If this project is intended to be shared, forked, or redistributed publicly, add an appropriate `LICENSE` file before publishing under explicit open-source terms.
+
+---
+
+<p align="center">
+  <strong>Scanora</strong><br>
+  <sub>Scan less. Get more done.</sub>
+</p>
