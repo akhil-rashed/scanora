@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://i.ibb.co.com/zh9zp3fq/file-00000000bfcc8211aa51fb9341c6096d.png" alt="Scanora logo" width="96" height="96" />
+<img src="[https://i.ibb.co.com/zh9zp3fq/file-00000000bfcc8211aa51fb9341c6096d.png](https://i.ibb.co.com/Psbmh1M0/file-00000000c1ac82119c142444655f4aca.png)" alt="Scanora logo" width="96" height="96" />
 
 # Scanora
 
